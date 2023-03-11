@@ -47,7 +47,7 @@ function FilterButtons({ filter, setFilter, setSearchTerm, searchTerm }) {
       {/* Search bar to filter todos by title or text */}
       <div className="search-bar">
         <TextField
-          label="Search by title or text"
+          label="Search"
           value={searchTerm}
           onChange={handleSearchChange}
         />
