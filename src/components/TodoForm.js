@@ -14,17 +14,18 @@ const schema = Yup.object().shape({
 });
 
 function TodoForm({ onSubmit }) {
+  // state variable to toggle form visibility
   const [showForm, setShowForm] = useState(false);
 
-  // initialize useForm hook and register form fields
+  // initialize the useForm hook to register form fields and manage form state
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset, // import reset function from useForm hook
+    reset,
   } = useForm();
 
-  // define handler function for form submission
+  // handle form submission
   const handleFormSubmit = async (data) => {
     await onSubmit(data); // call the onSubmit function passed as props
     const form = document.querySelector(".todo-form");
@@ -33,13 +34,14 @@ function TodoForm({ onSubmit }) {
     }
   };
 
-  // define handler function for closing the form
+  // handle form close
   const handleCloseClick = () => {
     setShowForm(false);
   };
 
   // render the TodoForm component
   if (!showForm) {
+    // render a button to show the form
     return (
       <Button
         variant="contained"
@@ -51,6 +53,7 @@ function TodoForm({ onSubmit }) {
     );
   }
 
+  // render the form
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="todo-form">
       <TextField {...register("title")} label="Title" />

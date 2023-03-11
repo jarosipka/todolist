@@ -1,52 +1,119 @@
-.todo-details {
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  background-color: #ececec;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.todo-item {
+  border-radius: 10px;
+  background-color: #ececec;
   display: flex;
   flex-direction: column;
-  flex: 2;
-  margin-left: 100px;
+  justify-content: space-between;
+  margin: 10px;
+  max-width: 90vw;
+  flex-grow: 1;
 }
 
-.todo-text {
-  margin-bottom: 5px;
+.todo-item:hover {
+  background-color: #b8b8b8;
+  transition: all 0.2s ease-in-out;
 }
 
-.todo-buttons {
-  display: flex;
-  flex: 1;
-  justify-content: flex-end;
-}
-
-.todo-buttons button {
-  margin-left: 5px;
-}
-
-.todo-title {
-  background-color: #ff9933;
-  border-radius: 10px;
-  padding: 5px;
+.todo-item .completed {
+  text-decoration: line-through;
+  color: #525252;
 }
 
 .todo-items-container {
   display: flex;
   flex-wrap: wrap;
+  list-style: none;
+  justify-content: center;
 }
 
-.todo-item {
-  padding: 10px;
+.todo-title {
+  background-color: #f9c784;
   border-radius: 10px;
-  margin: 20px;
-  max-width: 400px;
-  min-width: 300px;
-  margin-bottom: 10px;
-  background-color: #a1c7e0;
+  padding: 20px;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  word-break: break-all;
+  cursor: pointer;
+  color: #525252;
 }
 
-.todo-item .completed {
-  text-decoration: line-through;
-  color: #390d02;
+.todo-text {
+  margin-bottom: 5px;
+  padding: 15px;
+  word-wrap: break-word;
+  font-style: italic;
+  color: #525252;
+  font-family: "Lato", sans-serif;
+}
+
+.todo-details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  flex-grow: 1;
 }
 
 .todo-deadline {
   font-size: large;
   font-weight: bold;
-  padding: 10px 0 20px 0;
+  margin-top: 10px;
+  color: #2a2c2b;
+}
+
+.delete-button {
+  justify-content: flex-end;
+  align-self: flex-end;
+}
+
+.MuiSvgIcon-root {
+  transform: scale(1.5);
+  animation: checkAnimation 0.5s ease-in-out;
+}
+
+@keyframes checkAnimation {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Global styles */
+
+body {
+  background-color: #525252;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  color: #ececec;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* for page titles */
+h2 {
+  font-family: "Montserrat", sans-serif;
+  color: #f9c784;
 }

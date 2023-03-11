@@ -1,0 +1,23 @@
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem;
+  justify-content: center;
+  background-color: #ECECEC;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.todo-form > * {
+  margin-bottom: 2rem;
+  word-wrap: break-word;
+}
+
+.MuiFormControl-root {
+  width: 100%;
+}
+
+

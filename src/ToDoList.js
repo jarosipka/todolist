@@ -5,7 +5,7 @@ import TodoItem from "./components/ToDoItem";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./ToDoList.css";
+
 
 function TodoList() {
   // state variables
@@ -60,27 +60,42 @@ function TodoList() {
 
   // filter and search todos based on filter and search term
   const filterAndSearchTodos = (todos, filter, searchTerm) => {
-    return todos
-      .filter((todo) => {
-        if (filter === "all") {
-          return true;
-        }
-        if (filter === "active") {
-          return !todo.completed;
-        }
-        if (filter === "completed") {
-          return todo.completed;
-        }
-      })
-      .filter((todo) => {
-        return todo.title.toLowerCase().includes(searchTerm.toLowerCase());
+    // filter todos based on selected filter
+    const filteredTodos = todos.filter((todo) => {
+      if (filter === "all") {
+        return true;
+      }
+      if (filter === "active") {
+        return !todo.completed;
+      }
+      if (filter === "completed") {
+        return todo.completed;
+      }
+      return false; // add this line to return a value at the end of the function
+    });
+
+    // if there is a search term, filter the list by title or text
+    if (searchTerm) {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      return filteredTodos.filter((todo) => {
+        const lowerCaseTitle = todo.title.toLowerCase();
+        const lowerCaseText = todo.text.toLowerCase();
+        return (
+          lowerCaseTitle.includes(lowerCaseSearchTerm) ||
+          lowerCaseText.includes(lowerCaseSearchTerm)
+        );
       });
+    }
+
+    // if there is no search term, return the filtered list
+    return filteredTodos;
   };
 
   // render the todo list
+
   return (
     <>
-      {/* render the filter buttons */}
+      {/* render the todo form */}
       <div className="filter-container">
         <FilterButtons
           filter={filter}
@@ -89,22 +104,21 @@ function TodoList() {
           searchTerm={searchTerm}
         />
       </div>
-      {/* render the todo form */}
       <TodoForm onSubmit={onSubmit} className="todo-form" />
-
       {/* render the list of todo items */}
-      <ul className="todo-items-container">
+      <div className="todo-items-container">
         {displayedTodos.map((todo, index) => (
           <TodoItem
             className="todo-item"
             key={index}
             todo={todo}
             index={index}
+            filter={filter}
             handleComplete={handleComplete}
             handleDelete={handleDelete}
           />
         ))}
-      </ul>
+      </div>
     </>
   );
 }

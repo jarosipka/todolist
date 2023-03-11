@@ -1,80 +1,59 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import TextField from "@material-ui/core/TextField";
-import "./TodoForm.css";
+import React from "react";
+import { Button, TextField } from "@material-ui/core";
+import "./FilterButtons.css";
 
-// define a Yup schema to validate form input
-const schema = Yup.object().shape({
-  title: Yup.string().required("Title is required"),
-  text: Yup.string().required("Text is required"),
-  deadline: Yup.date().required("Deadline is required"),
-});
-
-function TodoForm({ onSubmit }) {
-  const [showForm, setShowForm] = useState(false);
-
-  // initialize useForm hook and register form fields
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset, // import reset function from useForm hook
-  } = useForm();
-
-  // define handler function for form submission
-  const handleFormSubmit = async (data) => {
-    await onSubmit(data); // call the onSubmit function passed as props
-    const form = document.querySelector(".todo-form");
-    if (form.checkValidity()) {
-      reset(); // reset form values after successful submission
-    }
+function FilterButtons({ filter, setFilter, setSearchTerm, searchTerm }) {
+  // define handler functions for button and search bar clicks
+  // function to set the filter when a filter button is clicked
+  const handleFilterClick = (filter) => {
+    setFilter(filter);
   };
 
-  // define handler function for closing the form
-  const handleCloseClick = () => {
-    setShowForm(false);
+  // function to set the search term when the input field changes
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
   };
 
-  // render the TodoForm component
-  if (!showForm) {
-    return (
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setShowForm(true)}
-      >
-        Add new to do
-      </Button>
-    );
-  }
-
+  // render the filter buttons and search bar
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="todo-form">
-      <TextField {...register("title")} label="Title" />
-      {errors.title && <p>{errors.title.message}</p>}
-      <TextField {...register("text")} label="Text" multiline minRows={4} />
-      {errors.text && <p>{errors.text.message}</p>}
-      <TextField
-        {...register("deadline")}
-        label="Deadline"
-        type="datetime-local"
-        InputLabelProps={{ shrink: true }}
-      />
+    <div className="filter-buttons">
+      {/* Button to show all todos */}
+      <Button
+        variant={filter === "all" ? "contained" : "outlined"}
+        color="primary"
+        onClick={() => handleFilterClick("all")}
+      >
+        All
+      </Button>
 
-      {errors.deadline && <p>{errors.deadline.message}</p>}
-      <ButtonGroup disableElevation variant="contained" color="primary">
-        <Button type="submit">Add todo</Button>
-        <Button onClick={handleCloseClick}>Close</Button>
-      </ButtonGroup>
-    </form>
+      {/* Button to show active todos */}
+      <Button
+        variant={filter === "active" ? "contained" : "outlined"}
+        color="primary"
+        onClick={() => handleFilterClick("active")}
+      >
+        Active
+      </Button>
+
+      {/* Button to show completed todos */}
+      <Button
+        variant={filter === "completed" ? "contained" : "outlined"}
+        color="primary"
+        onClick={() => handleFilterClick("completed")}
+      >
+        Completed
+      </Button>
+
+      {/* Search bar to filter todos by title or text */}
+      <div className="search-bar">
+        <TextField
+          label="Search by title or text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </div>
+    </div>
   );
 }
 
-// attach the Yup schema and reset function to the TodoForm component object
-TodoForm.schema = schema;
-TodoForm.reset = () => {};
-
-export default TodoForm;
+export default FilterButtons;
